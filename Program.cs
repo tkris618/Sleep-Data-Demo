@@ -1,10 +1,17 @@
 ﻿// See https://aka.ms/new-console-template for more information
 // ask for input
+string? resp = Console.ReadLine();
+string file = "data.txt";
+string line;
+
+do
+{
 Console.WriteLine("Enter 1 to create data file.");
 Console.WriteLine("Enter 2 to parse data.");
 Console.WriteLine("Enter anything else to quit.");
 // input response
-string? resp = Console.ReadLine();
+resp = Console.ReadLine();
+
 
 if (resp == "1")
 {
@@ -45,6 +52,46 @@ if (resp == "1")
 }
 else if (resp == "2")
 {
-    // TODO: parse data file
+    // TODO: parse data fil
+   if (File.Exists(file))
+    {
+        StreamReader sr = new StreamReader(file);
+        line = sr.ReadLine();
+        while (line != null)
+        {
+            //Console.WriteLine(line);
+            // Get index of comma
+            var commaIndex = line.IndexOf(",");
+            var slashIndex = line.IndexOf("|");
+            
+            
+            //Get Everything before the comma
+            var dateString = line.Substring(0, commaIndex);
+            var hourString = line.Substring(10, slashIndex);
+            
+            // Change date string to a Date Type
+            var dateType = DateTime.Parse(dateString);
+            
+            //Console.WriteLine(dateType);
+            //Console.WriteLine(hourString);
+            // Format dateType to 
+            var formattedMonth = dateType.ToString("Week of MMM, dd, yyyy");
+            Console.WriteLine(formattedMonth);
+            Console.WriteLine("Su Mo Tu We Th Fr Sa");
+            Console.WriteLine("-- -- -- -- -- -- --");
+            
+            Console.WriteLine(hourString);
+
+            line = sr.ReadLine();
+        }
+        sr.Close();
+        
+        //Console.WriteLine("Hi youve done it");
+    }
+    else
+    {
+        Console.WriteLine("File does not exist.");
+    }
 
 }
+} while(resp == "1" || resp == "2");
